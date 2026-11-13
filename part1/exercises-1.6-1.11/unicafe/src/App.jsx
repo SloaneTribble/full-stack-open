@@ -34,6 +34,32 @@ const DisplayPercentage = (props) => {
   return <div>{props.title}: {props.score / props.total * 100}%</div>
 }
 
+const Statistics = (props) => {
+
+  if (props.total == 0) {
+    return (
+    <div>
+      <Header title="Statistics"/>
+      <p>No feedback given</p>
+      </div>
+  )
+  }
+
+  return (
+    <div>
+      <Header title="Statistics"/>
+      <Display title="Good" count={props.good}/>
+      <Display title="Neutral" count={props.neutral}/>
+      <Display title="Bad" count={props.bad}/>
+      <p></p>
+      <Display title="Total" count={props.total}/>
+      <DisplayRatio title="Average" score={props.score} total={props.total}/>
+      <DisplayPercentage title="Percent Positive" score={props.good} total={props.total}/>
+    </div>
+  )
+    
+}
+
 
 
 
@@ -76,11 +102,7 @@ const App = () => {
 
     const updatedTotal = total + 1
     setTotal(updatedTotal)
-
   }
-
-  
-
 
   return (
     <div>
@@ -89,15 +111,7 @@ const App = () => {
       <Button onClick={neutralHandler} text={"Neutral"}/>
       <Button onClick={badHandler} text={"Bad"}/>
 
-      <Header title="Statistics"/>
-
-      <Display title="Good" count={good}/>
-      <Display title="Neutral" count={neutral}/>
-      <Display title="Bad" count={bad}/>
-      <p></p>
-      <Display title="Total" count={total}/>
-      <DisplayRatio title="Average" score={score} total={total}/>
-      <DisplayPercentage title="Percent Positive" score={good} total={total}/>
+      <Statistics good={good} neutral={neutral} bad={bad} total={total} score={score}/>
 
     </div>
   )
