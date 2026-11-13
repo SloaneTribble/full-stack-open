@@ -10,28 +10,10 @@ const Button = (props) => {
   return <button onClick={props.onClick}>{props.text}</button>
 }
 
-const Display = (props) => {
+const StatisticLine = (props) => {
   return (
-    <div>{props.title}: {props.count}</div>
+    <div>{props.title}: {props.value}</div>
   )
-}
-
-const DisplayRatio = (props) => {
-
-  if (props.total == 0) {
-    return <div>{props.title}: N/A</div>
-  }
-
-  return <div>{props.title}: {props.score / props.total}</div>
-}
-
-const DisplayPercentage = (props) => {
-
-  if (props.total == 0) {
-    return <div>{props.title}: N/A</div>
-  }
-
-  return <div>{props.title}: {props.score / props.total * 100}%</div>
 }
 
 const Statistics = (props) => {
@@ -45,16 +27,20 @@ const Statistics = (props) => {
   )
   }
 
+  const average = (props.score / props.total).toFixed(2)
+  const percentPositive = (props.good / props.total * 100).toFixed(1)
+  const percentPositiveString = `${percentPositive}%`
+
   return (
     <div>
       <Header title="Statistics"/>
-      <Display title="Good" count={props.good}/>
-      <Display title="Neutral" count={props.neutral}/>
-      <Display title="Bad" count={props.bad}/>
+      <StatisticLine title="Good" value={props.good}/>
+      <StatisticLine title="Neutral" value={props.neutral}/>
+      <StatisticLine title="Bad" value={props.bad}/>
       <p></p>
-      <Display title="Total" count={props.total}/>
-      <DisplayRatio title="Average" score={props.score} total={props.total}/>
-      <DisplayPercentage title="Percent Positive" score={props.good} total={props.total}/>
+      <StatisticLine title="Total" value={props.total}/>
+      <StatisticLine title="Average" value={average}/>
+      <StatisticLine title="Percent Positive" value={percentPositiveString}/>
     </div>
   )
     
