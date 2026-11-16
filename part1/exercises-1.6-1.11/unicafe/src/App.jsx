@@ -37,8 +37,6 @@ const Statistics = (props) => {
   return (
     <div>
       <Header title="Statistics"/>
-      
-
       <table>
         <tbody>
           <StatisticLine title="Good" value={props.good}/>
