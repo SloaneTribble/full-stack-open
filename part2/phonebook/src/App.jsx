@@ -1,78 +1,8 @@
 import { useState } from "react";
-
-const Person = ({ person }) => {
-  return (
-    <li>
-      {person.name} {person.number}
-    </li>
-  );
-};
-
-const caseInsensitiveStringMatch = (searchField) => {
-  const lowerCaseSearchField = searchField.toLowerCase()
-  const stringMatchFunction = (person) => {
-    const lowerCaseName = person.name.toLowerCase();
-    return lowerCaseName.indexOf(lowerCaseSearchField) >= 0
-  }
-  return stringMatchFunction;
-}
-
-const Persons = ({ persons, searchField }) => {
-  const personsToShow = searchField.length > 0 ? 
-    persons.filter(caseInsensitiveStringMatch(searchField))
-    : persons
-  
-  return (
-    <div>
-      <ul>  
-        {personsToShow.map((person) => (
-          <Person key={person.id} person={person} />
-        ))}
-      </ul>
-    </div>
-  );
-};
-
-const Form = (props) => {
-  return (
-    <div>
-      <form onSubmit={props.addPerson}>
-        <div>
-          name:
-          <input
-            name="name"
-            value={props.newName}
-            onChange={props.handleNameChange}
-          />
-        </div>
-        <div>
-          number:
-          <input
-            name="number"
-            value={props.newNumber}
-            onChange={props.handleNumberChange}
-          />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
-    </div>
-  );
-};
-
-const SearchField = (props) => {
-  return (
-    <div>
-      Search for:
-      <input
-        name="search"
-        value={props.searchField}
-        onChange={props.handleSearchFieldChange}
-      />
-    </div>
-  );
-};
+import Form from "./Components/Form";
+import SearchField from "./Components/SearchField";
+import Person from "./Components/Person";
+import Persons from "./Components/Persons";
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -95,7 +25,7 @@ const App = () => {
 
   const handleSearchFieldChange = (event) => {
     setSearchField(event.target.value);
-  }
+  };
 
   const resetInputFields = () => {
     setNewName("");
@@ -107,7 +37,7 @@ const App = () => {
     const personObject = {
       name: newName,
       number: newNumber,
-      id: persons.length + 1
+      id: persons.length + 1,
     };
 
     if (persons.find((person) => person.name === newName)) {
@@ -119,11 +49,13 @@ const App = () => {
     resetInputFields();
   };
 
-
   return (
     <div>
       <h2>Phonebook</h2>
-      <SearchField searchField={searchField} handleSearchFieldChange={handleSearchFieldChange}/>
+      <SearchField
+        searchField={searchField}
+        handleSearchFieldChange={handleSearchFieldChange}
+      />
       <h3>Add New Entry</h3>
       <Form
         addPerson={addPerson}
