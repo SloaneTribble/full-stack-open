@@ -33,6 +33,11 @@ const App = () => {
       name: newName
     }
 
+    if (persons.find((person) => person.name === newName)) {
+      alert(`${newName} is already listed.`)
+      return
+    }
+
     setPersons(persons.concat(personObject))
     setNewName('')
   }
