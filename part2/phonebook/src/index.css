@@ -1,0 +1,13 @@
+.notification {
+    border: solid 2px black;
+    margin: .2rem;
+    padding: .2rem;
+}
+
+.success {
+    background-color: aquamarine;
+}
+
+.error {
+    background-color: rgb(255, 67, 67);
+}

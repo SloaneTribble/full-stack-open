@@ -3,6 +3,7 @@ import Form from "./components/Form";
 import SearchField from "./components/SearchField";
 import Person from "./components/Person";
 import Persons from "./components/Persons";
+import Notification from "./components/Notification";
 
 import axios from "axios";
 
@@ -13,6 +14,7 @@ const App = () => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [searchField, setSearchField] = useState("");
+  const [notification, setNotification] = useState(null)
 
   useEffect(() => {
     personsService.getAll()
@@ -39,6 +41,13 @@ const App = () => {
     setNewNumber("");
   };
 
+  const showNotification = (notificationObject) => {
+        setNotification(notificationObject)
+        setTimeout(() => {
+          setNotification(null)
+        }, 5000)
+  }
+
   const addPerson = (event) => {
     event.preventDefault();
 
@@ -59,6 +68,11 @@ const App = () => {
 
     personsService.create(personObject).then((returnedPerson) => {
       setPersons(persons.concat(returnedPerson));
+      const notificationObject = {
+            message: `An entry for ${returnedPerson.name} has been created.`,
+            type: 'success'
+          }
+      showNotification(notificationObject)
       resetInputFields();
     })
   };
@@ -75,6 +89,11 @@ const App = () => {
         .then((returnedPerson) => {
           setPersons(persons.map((person) => 
             (person.id == updatedPerson.id ? updatedPerson : person)))
+          const notificationObject = {
+            message: `${updatedPerson.name} has been updated.`,
+            type: 'success'
+          }
+          showNotification(notificationObject)
         })
         .catch((error) => {
           console.log(error)
@@ -85,7 +104,6 @@ const App = () => {
   const deletePerson = (id) => {
     return (() => {
       const personName = persons.find((person) => person.id === id).name
-      console.log(personName)
       if (!confirm(`Are you sure you want to delete ${personName}?`)){
         return
       }
@@ -93,6 +111,11 @@ const App = () => {
     .then((response)=> {
       const updatedPersons = persons.filter((person) => (person.id !== id))
       setPersons(updatedPersons)
+      const notificationObject = {
+            message: `The entry for ${personName} has been deleted.`,
+            type: 'success'
+          }
+      showNotification(notificationObject)
     })}
     )
 }
@@ -100,6 +123,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification notification={notification}/>
       <SearchField
         searchField={searchField}
         handleSearchFieldChange={handleSearchFieldChange}
