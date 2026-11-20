@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
-import Form from "./Components/Form";
-import SearchField from "./Components/SearchField";
-import Person from "./Components/Person";
-import Persons from "./Components/Persons";
+import Form from "./components/Form";
+import SearchField from "./components/SearchField";
+import Person from "./components/Person";
+import Persons from "./components/Persons";
 
 import axios from "axios";
+
+import personsService from "./services/persons"
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -13,9 +15,9 @@ const App = () => {
   const [searchField, setSearchField] = useState("");
 
   useEffect(() => {
-    axios.get('http://localhost:3001/persons')
+    personsService.getAll()
     .then((response) => {
-      setPersons(response.data)
+      setPersons(response)
     })
   }, [])
   
@@ -42,7 +44,6 @@ const App = () => {
     const personObject = {
       name: newName,
       number: newNumber,
-      id: persons.length + 1,
     };
 
     if (persons.find((person) => person.name === newName)) {
@@ -50,8 +51,11 @@ const App = () => {
       return;
     }
 
-    setPersons(persons.concat(personObject));
-    resetInputFields();
+    personsService.create(personObject).then((returnedPerson) => {
+      setPersons(persons.concat(returnedPerson));
+      resetInputFields();
+    })
+    
   };
 
   return (
