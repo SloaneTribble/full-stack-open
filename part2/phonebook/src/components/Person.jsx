@@ -1,7 +1,10 @@
-const Person = ({ person }) => {
+import DeleteButton from "./DeleteButton";
+
+const Person = ({ person, deleteButtonCallback }) => {
   return (
     <li>
-      {person.name} {person.number}
+      {person.name} {person.number} 
+      <DeleteButton callBack={deleteButtonCallback}/>
     </li>
   );
 };

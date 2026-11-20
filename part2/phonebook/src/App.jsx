@@ -55,8 +55,22 @@ const App = () => {
       setPersons(persons.concat(returnedPerson));
       resetInputFields();
     })
-    
   };
+
+  const deletePerson = (id) => {
+    return (() => {
+      const personName = persons.find((person) => person.id === id).name
+      console.log(personName)
+      if (!confirm(`Are you sure you want to delete ${personName}?`)){
+        return
+      }
+      personsService.deletePerson(id)
+    .then((response)=> {
+      const updatedPersons = persons.filter((person) => (person.id !== id))
+      setPersons(updatedPersons)
+    })}
+    )
+}
 
   return (
     <div>
@@ -74,7 +88,7 @@ const App = () => {
         handleNumberChange={handleNumberChange}
       />
       <h3>Numbers</h3>
-      <Persons persons={persons} searchField={searchField} />
+      <Persons persons={persons} searchField={searchField} deleteButtonCallback={deletePerson}/>
     </div>
   );
 };

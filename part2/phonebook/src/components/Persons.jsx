@@ -1,5 +1,8 @@
 import Person from "./Person";
 
+import DeleteButton from "./DeleteButton";
+
+
 const caseInsensitiveStringMatch = (searchField) => {
   const lowerCaseSearchField = searchField.toLowerCase();
   const stringMatchFunction = (person) => {
@@ -9,7 +12,9 @@ const caseInsensitiveStringMatch = (searchField) => {
   return stringMatchFunction;
 };
 
-const Persons = ({ persons, searchField }) => {
+
+
+const Persons = ({ persons, searchField, deleteButtonCallback }) => {
   const personsToShow =
     searchField.length > 0
       ? persons.filter(caseInsensitiveStringMatch(searchField))
@@ -19,8 +24,8 @@ const Persons = ({ persons, searchField }) => {
     <div>
       <ul>
         {personsToShow.map((person) => (
-          <Person key={person.id} person={person} />
-        ))}
+            <Person person={person} key={person.id} deleteButtonCallback={deleteButtonCallback(person.id)}/>
+        ))} 
       </ul>
     </div>
   );
