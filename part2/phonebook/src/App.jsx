@@ -41,13 +41,19 @@ const App = () => {
 
   const addPerson = (event) => {
     event.preventDefault();
+
     const personObject = {
       name: newName,
       number: newNumber,
     };
 
     if (persons.find((person) => person.name === newName)) {
-      alert(`${newName} is already listed.`);
+      if (persons.find((person) => person.number === newNumber)) {
+        alert(`"${newName} ${newNumber}" is a duplicate entry`)
+        return
+      }
+
+      updatePerson(personObject)
       return;
     }
 
@@ -56,6 +62,25 @@ const App = () => {
       resetInputFields();
     })
   };
+
+  const updatePerson = (personObject) => {
+      const confirmed = confirm(`${personObject.name} is already listed. Update number?`)
+      if (!confirmed) {return}
+
+      const person = persons.find((n) => n.name === newName)
+      const updatedPerson = { ...person, number: newNumber }
+
+      personsService
+        .update(person.id, updatedPerson)
+        .then((returnedPerson) => {
+          setPersons(persons.map((person) => 
+            (person.id == updatedPerson.id ? updatedPerson : person)))
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+
+  }
 
   const deletePerson = (id) => {
     return (() => {
