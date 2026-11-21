@@ -1,13 +1,13 @@
 .notification {
-    border: solid 2px black;
-    margin: .2rem;
-    padding: .2rem;
+  border: solid 2px black;
+  margin: 0.2rem;
+  padding: 0.2rem;
 }
 
 .success {
-    background-color: aquamarine;
+  background-color: aquamarine;
 }
 
 .error {
-    background-color: rgb(255, 67, 67);
+  background-color: rgb(255, 67, 67);
 }
