@@ -35,6 +35,7 @@ const CountryList = ({ countries, searchField }) => {
               key={country.capitalInfo.latlng}
               countryObject={country}
               expand={false}
+              toggleButton={true}
             />
           ))}
         </ul>
@@ -46,7 +47,11 @@ const CountryList = ({ countries, searchField }) => {
 
   return (
     <div>
-      <Country countryObject={countriesToShow[0]} expand={true} />
+      <Country
+        countryObject={countriesToShow[0]}
+        expand={true}
+        toggleButton={false}
+      />
     </div>
   );
 };
