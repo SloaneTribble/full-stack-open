@@ -46,7 +46,7 @@ const Country = ({ countryObject, expand, toggled, singleCountry }) => {
         ))}
       </ul>
       <img alt={countryFlags.alt} src={countryFlags.png}></img>
-      {singleCountry ? <WeatherData coordinates={countryCapitalCoords}/> : null}
+      {singleCountry ? <WeatherData capitalName={countryCapital} coordinates={countryCapitalCoords}/> : null}
       
     </div>
   );
