@@ -22,7 +22,7 @@ const CountryList = ({ countries, searchField }) => {
     return null;
   }
 
-  if (countriesToShow.length > 10) {
+  if (countriesToShow.length >= 10) {
     return <div>Too many matches; please try another query</div>;
   }
 
@@ -32,10 +32,10 @@ const CountryList = ({ countries, searchField }) => {
         <ul>
           {countriesToShow.map((country) => (
             <Country
-              key={country.capitalInfo.latlng}
+              key={`${country.name.common} ${country.capitalInfo.latlng}`}
               countryObject={country}
               expand={false}
-              toggleButton={true}
+              toggled={true}
             />
           ))}
         </ul>
@@ -51,6 +51,7 @@ const CountryList = ({ countries, searchField }) => {
         countryObject={countriesToShow[0]}
         expand={true}
         toggleButton={false}
+        singleCountry={true}
       />
     </div>
   );
