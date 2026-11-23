@@ -1,0 +1,35 @@
+// missing name
+POST http://localhost:3001/api/persons 
+Content-Type: application/json
+
+{
+"number": 239082349782398432
+}
+
+###
+// missing number
+POST http://localhost:3001/api/persons 
+Content-Type: application/json
+
+{
+"name": "Freddy Bingus"
+}
+
+###
+// duplicate name
+POST http://localhost:3001/api/persons 
+Content-Type: application/json
+
+{
+"name": "Arto Hellas", "number": 130490990834390
+}
+
+
+###
+// duplicate number
+POST http://localhost:3001/api/persons 
+Content-Type: application/json
+
+{
+"name": "Ronn", "number": "39-23-6423122"
+}

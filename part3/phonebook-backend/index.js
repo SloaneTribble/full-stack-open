@@ -54,14 +54,29 @@ const getRandomInt = (max) => {
   return Math.floor(Math.random() * max);
 }
 
+const generateErrorResponse = (response, statusCode, message) => {
+    return response.status(statusCode).json({
+      error: message,
+    })
+}
+
 app.post('/api/persons', (request, response) => {
   const body = request.body
-  console.log(body)
-
+    console.log(request)
   if (!body.name) {
-    return response.status(400).json({
-      error: 'content missing',
-    })
+    return generateErrorResponse(response, 400, "name missing")
+  }
+
+  if (!body.number) {
+    return generateErrorResponse(response, 400, "number missing")
+  }
+
+  if(persons.find((person) => person.name === body.name)) {
+    return generateErrorResponse(response, 400, "This name is already in use")
+  }
+
+  if(persons.find((person) => person.number === body.number)) {
+    return generateErrorResponse(response, 400, "This number is already in use")
   }
 
   const person = {
