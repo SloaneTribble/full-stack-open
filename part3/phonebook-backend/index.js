@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+const morgan = require('morgan')
 
 
 let persons = [
@@ -26,6 +27,7 @@ let persons = [
 ]
 
 app.use(express.json())
+app.use(morgan('tiny'))
 
 app.get('/api/persons', (request, response) => {
     response.json(persons)
@@ -62,7 +64,6 @@ const generateErrorResponse = (response, statusCode, message) => {
 
 app.post('/api/persons', (request, response) => {
   const body = request.body
-    console.log(request)
   if (!body.name) {
     return generateErrorResponse(response, 400, "name missing")
   }
