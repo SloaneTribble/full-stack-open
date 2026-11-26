@@ -29,6 +29,9 @@ let persons = [
 
 app.use(express.json())
 
+// "whenever Express gets an HTTP GET request it will first check if the dist directory contains a file corresponding to the request's address"
+app.use(express.static('dist'))
+
 morgan.token('data', (req) => JSON.stringify(req.body))
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :data'))
 
