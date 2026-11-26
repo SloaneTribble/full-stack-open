@@ -111,6 +111,7 @@ const App = () => {
   };
 
   const deletePerson = (id) => {
+    console.log(typeof(id))
     return () => {
       const personName = persons.find((person) => person.id === id).name;
 

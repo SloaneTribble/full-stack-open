@@ -1,6 +1,7 @@
 const express = require('express')
-const app = express()
 const morgan = require('morgan')
+const cors = require('cors')
+const app = express()
 
 
 let persons = [
@@ -31,6 +32,7 @@ app.use(express.json())
 morgan.token('data', (req) => JSON.stringify(req.body))
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :data'))
 
+app.use(cors())
 
 app.get('/api/persons', (request, response) => {
     response.json(persons)
@@ -55,8 +57,8 @@ app.get('/info', (request, response) => {
     response.json(infoMessage)
 })
 
-const getRandomInt = (max) => {
-  return Math.floor(Math.random() * max);
+const getRandomIntString = (max) => {
+  return Math.floor(Math.random() * max).toString();
 }
 
 const generateErrorResponse = (response, statusCode, message) => {
@@ -86,7 +88,7 @@ app.post('/api/persons', (request, response) => {
   const person = {
     name: body.name,
     number: body.number || "No number provided",
-    id: getRandomInt(1000000),
+    id: getRandomIntString(1000000),
   }
 
   persons = persons.concat(person)
@@ -97,7 +99,6 @@ app.post('/api/persons', (request, response) => {
 app.delete('/api/persons/:id', (request, response) => {
   const id = request.params.id
   persons = persons.filter((person) => person.id !== id)
-
   response.status(204).end()
 })
 
