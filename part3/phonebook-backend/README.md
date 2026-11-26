@@ -1,3 +1,3 @@
-Backend is deployed to https://full-stack-open-part3-wsap.onrender.com/
+Website is deployed to https://full-stack-open-part3-wsap.onrender.com/
 
-For example, visit https://full-stack-open-part3-wsap.onrender.com/api/persons to see the list of persons
+To see the routes available, please visit ./index.js
